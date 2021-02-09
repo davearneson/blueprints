@@ -1,6 +1,9 @@
 blueprint:
   name: Alexa Music Group - Play Music When Entering Zone
-  description: Choose from the following options for a person to trigger music playing by entering a zone. Conditioned by time.
+  description: |
+    You must set up the Alexa Media Player custom component, a new input_text entity (I used HA helpers), and actionable notifications in your configuration.yaml for this to work.
+  
+    Choose from the following options for a person to trigger music playing by entering a zone. Conditioned by time.
   domain: automation
   input:
     which_group:
