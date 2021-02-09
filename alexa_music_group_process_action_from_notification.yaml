@@ -34,7 +34,7 @@ blueprint:
           domain: input_text
     response_action_name_1:
       name: Option 1 Action Name
-      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      description: What is the identifier of your actionName for your actionable notification in config.yaml? ex - JAZZ_MUSIC
       selector:
         text:
       default: "JAZZ_MUSIC"
@@ -46,7 +46,7 @@ blueprint:
       default: "Jazz on Apple Music"
     response_action_name_2:
       name: Option 2 Action Name
-      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      description: What is the identifier of your actionName for your actionable notification in config.yaml? ex - CLASSICAL_MUSIC
       selector:
         text:
       default: "CLASSICAL_MUSIC"
@@ -58,7 +58,7 @@ blueprint:
       default: "Classical music on Apple Music"
     response_action_name_3:
       name: Option 3 Action Name
-      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      description: What is the identifier of your actionName for your actionable notification in config.yaml? ex - RANDOM_MUSIC
       selector:
         text:
       default: "RANDOM_MUSIC"
@@ -70,7 +70,7 @@ blueprint:
       default: "Music"
     response_action_name_4:
       name: Option 4 Action Name
-      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      description: What is the identifier of your actionName for your actionable notification in config.yaml? ex - RANDOM_MUSIC
       selector:
         text:
       default: "RANDOM_MUSIC"
