@@ -1,6 +1,31 @@
 blueprint:
   name: Alexa Music Group - Send Actionable Notification at Time
-  description: Choose a person to send a notification to at a certain time. Conditioned by zone.
+  description: |
+    Choose a person to send a notification to at a certain time. Conditioned by zone.
+    
+    You must set up actionable notifications in your configuration.yaml for this to work.
+    
+    My configuration.yaml file has an entry that looks something like this (minus the periods)
+    
+    ios:
+    ..push:
+    ....categories:
+    ......- name: Todays Music
+    ........identifier: 'todaysmusic'
+    ........actions:
+    ..........- identifier: 'INPUT_MUSIC'
+    ............title: "Type what you'd like to hear"
+    ............behavior: 'textInput'
+    ............textInputButtonTitle: 'Submit'
+    ............textInputPlaceholder: 'music'
+    ..........- identifier: 'JAZZ_MUSIC'
+    ............title: 'Jazz Radio'
+    ..........- identifier: 'CLASSICAL_MUSIC'
+    ............title: 'Classical Radio'
+    ..........- identifier: 'RANDOM_MUSIC'
+    ............title: 'Random' 
+    
+    If you want to add a custom choice for yourself (or change one of these choices), just use this same naming convention.
   domain: automation
   input:
     actionable_notification_identifier:
