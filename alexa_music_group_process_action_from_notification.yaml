@@ -1,0 +1,133 @@
+blueprint:
+  name: Alexa Music Group - Process Actionable Notification Return
+  description: |
+    You must set up actionable notifications in your configuration.yaml for this to work.
+    
+    My configuration.yaml file has an entry that looks something like this (minus the periods)
+    
+    ios:
+    ..push:
+    ....categories:
+    ......- name: Todays Music
+    ........identifier: 'todaysmusic'
+    ........actions:
+    ..........- identifier: 'INPUT_MUSIC'
+    ............title: "Type what you'd like to hear"
+    ............behavior: 'textInput'
+    ............textInputButtonTitle: 'Submit'
+    ............textInputPlaceholder: 'music'
+    ..........- identifier: 'JAZZ_MUSIC'
+    ............title: 'Jazz Radio'
+    ..........- identifier: 'CLASSICAL_MUSIC'
+    ............title: 'Classical Radio'
+    ..........- identifier: 'RANDOM_MUSIC'
+    ............title: 'Random' 
+    
+    If you want to add a custom choice for yourself (or change one of these choices), just use this same naming convention.
+  domain: automation
+  input:
+    text_input_entity:
+      name: Text Input Helper You Created
+      description: Use HA Helpers to create a text input entity to use here.
+      selector:
+        entity:
+          domain: input_text
+    response_action_name_1:
+      name: Option 1 Action Name
+      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      selector:
+        text:
+      default: "JAZZ_MUSIC"
+    response_action_command_1:
+      name: Option 1 Action Command
+      description: What do you want to say to Alexa? Text will replace asterisks in the following - "Alexa, play ******* on the (name of music group) group."
+      selector:
+        text:
+      default: "Jazz on Apple Music"
+    response_action_name_2:
+      name: Option 2 Action Name
+      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      selector:
+        text:
+      default: "CLASSICAL_MUSIC"
+    response_action_command_2:
+      name: Option 2 Action Command
+      description: What do you want to say to Alexa? Text will replace asterisks in the following - "Alexa, play ******* on the (name of music group) group."
+      selector:
+        text:
+      default: "Classical music on Apple Music"
+    response_action_name_3:
+      name: Option 3 Action Name
+      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      selector:
+        text:
+      default: "RANDOM_MUSIC"
+    response_action_command_3:
+      name: Option 3 Action Command
+      description: What do you want to say to Alexa? Text will replace asterisks in the following - "Alexa, play ******* on the (name of music group) group."
+      selector:
+        text:
+      default: "Music"
+    response_action_name_4:
+      name: Option 4 Action Name
+      description: What is the name of your actionName? ex - JAZZ_MUSIC
+      selector:
+        text:
+      default: "RANDOM_MUSIC"
+    response_action_command_4:
+      name: Option 4 Action Command
+      description: What do you want to say to Alexa? Text will replace asterisks in the following - "Alexa, play ******* on the (name of music group) group."
+      selector:
+        text:
+      default: "Music"
+
+trigger:
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: INPUT_MUSIC
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: !input response_action_name_1
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: !input response_action_name_2
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: !input response_action_name_3
+  - platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: !input response_action_name_4
+
+variables:
+  action_name_1: !input response_action_name_1
+  action_name_2: !input response_action_name_2
+  action_name_3: !input response_action_name_3
+  action_name_4: !input response_action_name_4
+  action_command_1: !input response_action_command_1
+  action_command_2: !input response_action_command_2
+  action_command_3: !input response_action_command_3
+  action_command_4: !input response_action_command_4
+ 
+action:
+  - service: input_text.set_value
+    data_template:
+      entity_id: input_text.alex_arriving_home_music
+      value: >-
+        {% if trigger.event.data["actionName"] == "INPUT_MUSIC" %}
+          {{ trigger.event.data["textInput"] }}     
+        {% elif trigger.event.data["actionName"] == action_name_1 %}
+          {{ action_command_1 }}
+        {% elif trigger.event.data["actionName"] == action_name_2 %}
+          {{ action_command_2 }}
+        {% elif trigger.event.data["actionName"] == action_name_3 %}
+          {{ action_command_3 }}
+        {% elif trigger.event.data["actionName"] == action_name_4 %}
+          {{ action_command_4 }}
+        {% else %}
+          Music
+        {% endif %}
