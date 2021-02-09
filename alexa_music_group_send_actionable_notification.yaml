@@ -39,6 +39,7 @@ blueprint:
       description: What time do you want the actionable notification to send?
       selector:
         time:
+      default: '16:15:00'
     person_entity:
       name: Person
       description: Who is the notification Zone-conditioned by?
