@@ -1,7 +1,7 @@
 blueprint:
   name: Alexa Music Group - Process Actionable Notification Return
   description: |
-    You must set up actionable notifications in your configuration.yaml for this to work.
+    You must set up the Alexa Media Player custom component, a new input_text entity (I used HA helpers), and actionable notifications in your configuration.yaml for this to work.
     
     My configuration.yaml file has an entry that looks something like this (minus the periods)
     
