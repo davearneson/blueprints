@@ -1,0 +1,69 @@
+blueprint:
+  name: Alexa Music Group - Play Music When Entering Zone
+  description: Choose from the following options for a person to trigger music playing by entering a zone. Conditioned by time.
+  domain: automation
+  input:
+    which_group:
+      name: Which Group to Send Music
+      description: What is the Alexa Multi-Room Group you want to use? ex - everywhere (You must define this group in the Alexa app.)
+      selector:
+        text:
+      default: everywhere
+    time_start:
+      name: Start Time for Condition
+      description: What time do you want the automation window to start?
+      selector:
+        time:
+      default: '12:00:00'
+    time_stop:
+      name: Stop Time for Condition
+      description: What time do you want the automation window to stop?
+      selector:
+        time:
+      default: '21:30:00'
+    person_entity:
+      name: Person
+      description: Who is triggering the music by entering a zone?
+      selector:
+        entity:
+          domain: person
+    zone_entity:
+      name: Zone
+      description: What zone do you want to use?
+      selector:
+        entity:
+          domain: zone
+    text_input_entity:
+      name: Text Input Helper You Created
+      description: The HA Helper text input entity you created for your actionable notification.
+      selector:
+        entity:
+          domain: input_text
+    which_echo:
+      name: Amazon Echo Device
+      description: The device to which you will be sending the simulated voice command.
+      selector:
+        entity:
+          domain: media_player
+
+trigger:
+  platform: zone
+  entity_id: !input person_entity
+  zone: !input zone_entity
+  event: enter
+  
+condition:
+  condition: time
+  after: !input time_start
+  before: !input time_stop
+
+variables:
+  which_group: !input which_group
+  text_input_entity: !input text_input_entity
+    
+action:
+  service: media_player.play_media
+  data_template:
+    entity_id: !input which_echo
+    media_content_id: "play {{ states(text_input_entity) }} on the {{ which_group }} group"
+    media_content_type: custom
