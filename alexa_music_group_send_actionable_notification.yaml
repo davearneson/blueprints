@@ -1,15 +1,28 @@
 blueprint:
-  name: Alexa Music Group - Send Actionable Notification
-  description: Arriving Home Music Actionable Notification
+  name: Alexa Music Group - Send Actionable Notification at Time
+  description: Choose a person to send a notification to at a certain time. Conditioned by zone.
   domain: automation
   input:
+    actionable_notification_identifier:
+      name: Name of Your Actionable Notification Identifier
+      description: What is the identifier of the actionable notification you created in config.yaml? ex - todaysmusic
+      selector:
+        text:
+      default: todaysmusic
+    time_on:
+      name: Time to send notification
+      description: What time do you want the actionable notification to send?
+      selector:
+        time:
     person_entity:
       name: Person
+      description: Who is the notification Zone-conditioned by?
       selector:
         entity:
           domain: person
     zone_entity:
       name: Zone
+      description: What zone do you want to use for the condition?
       selector:
         entity:
           domain: zone
@@ -21,18 +34,19 @@ blueprint:
           integration: mobile_app
 trigger:
   platform: time
-  at: '16:15:00'
-
+  at: !input time_on
+  
 condition:
   condition: zone
   entity_id: !input person_entity
-  zone: ! input zone_entity
+  zone: !input zone_entity
     
 action:
-  service: !input notify_device
+  domain: mobile_app
+  type: notify
+  device_id: !input notify_device
   data:
-    data:
-      push:
-        category: todaysmusic
-    message: What do you want to hear today?
-    title: Arriving Home Music
+    push:
+      category: !input actionable_notification_identifier
+  message: What do you want to hear today?
+  title: Arriving Home Music
