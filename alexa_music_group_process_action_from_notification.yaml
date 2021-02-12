@@ -24,6 +24,14 @@ blueprint:
     ............title: 'Random' 
     
     If you want to add a custom choice for yourself (or change one of these choices), just use this same naming convention.
+    
+    NOTE** The phrases Alexa accepts via text input appear to be a bit of a moving target, at least in my experience. 
+    Apple radio is currently not working, but if I play around with the syntax, I've been able to get most things working reasonably well. 
+    For example, if the phrase, "Play Kate Bush on Apple Music on the Everywhere Group" is sent via this method, in my case, it tries to play an audio book. 
+    If I change the syntax to, "Play music by Kate Bush on Apple Music on the Everywhere Group," it works correctly. 
+    However, if I say "Play the Beatles on Apple Music," it works just fine. You just have to play around with it.. 
+    Playing a playlist works, but shuffle is extremely unreliable - however shuffle is also unreliable if you request via voice as well.
+    Frustratingly, these syntax issues seem to be independent of the way actual speech is processed by Alexa. (If I speak the phrase, it works as intended.)
   domain: automation
   input:
     text_input_entity:
